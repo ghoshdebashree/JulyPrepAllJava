@@ -20,7 +20,6 @@ public class ZeroShifts {
         } else if (!checkPalindromeString(str)) {
             System.out.println("Not Palindrome");
         }
-
     }
 
     private static boolean checkPalindromeString(String newStr) {

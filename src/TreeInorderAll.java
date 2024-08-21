@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TreeInorderAll {
     static Tree root;
@@ -32,8 +31,8 @@ public class TreeInorderAll {
         treeNode.insert(49);
         treeNode.insert(75);
         treeNode.insert(28);
-        treeNode.insert(37);
-        treeNode.insert(92);
+        treeNode.insert(76);
+        treeNode.insert(49);
         treeNode.insert(30);
         inorder();
         int element = 21;
@@ -83,6 +82,96 @@ public class TreeInorderAll {
         else{
             System.out.println("No path sum");
         }
+
+//        List<Integer> l = treeNode.rightSideView();
+//
+//            System.out.println("Right side view  " + l);
+//
+//
+//        List<Integer> leftSide = treeNode.leftSideView();
+//
+//            System.out.println("Left side view  "  +leftSide);
+
+            List<Tree> r = findDuplicate();
+            for(Tree t : r) {
+                System.out.println("Duplicate subtree rooted at node with value: "+ t.value);
+            }
+        }
+
+    private static List<Tree> findDuplicate() {
+        List<Tree> result = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        checkDuplicates(root, map, result);
+        return result;
+    }
+
+    private static String checkDuplicates(Tree root, Map<String, Integer> map, List<Tree> result) {
+        if(root == null){
+            return "#";
+        }
+        String left = checkDuplicates(root.left, map, result);
+        String right = checkDuplicates(root.right, map, result);
+        String sequence = root.value+ " , " + left + " , " + right;
+        map.put(sequence, map.getOrDefault(sequence, 0) + 1);
+        if(map.get(sequence) == 2){
+            result.add(root);
+        }
+        return sequence;
+    }
+
+
+    private  List<Integer> leftSideView() {
+        List<Integer> result = new ArrayList<>();
+        if(root == null){
+            return result;
+        }
+        Queue<Tree> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int levelSize = queue.size();
+            for(int i = 0; i < levelSize; i++){
+                Tree currentNode = queue.poll();
+                result.add(currentNode.value);
+                if(i == 0){
+                    queue.add(currentNode);
+                }
+                if(currentNode.left != null){
+                    queue.add(currentNode.left);
+                }
+                if(currentNode.right != null){
+                    queue.add(currentNode.right);
+                }
+            }
+        }
+        return result;
+    }
+
+    private  List<Integer> rightSideView() {
+
+        List<Integer> result = new ArrayList<>();
+        if(root == null){
+            return result;
+        }
+        Queue<Tree> queue = new LinkedList<>();
+        queue.add(root);
+
+        while(!queue.isEmpty()){
+            int levelSize = queue.size();
+            for(int i = 0; i< levelSize; i++){
+                Tree currentNode = queue.poll();
+                result.add(currentNode.value);
+                if(i == levelSize - 1){
+                    result.add(currentNode.value);
+                }
+                if(root.left != null) {
+                    queue.add(currentNode.left);
+                }
+                if(root.right != null){
+                    queue.add(currentNode.right);
+                }
+            }
+        }
+        return result;
 
     }
 

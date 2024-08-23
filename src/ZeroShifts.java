@@ -37,7 +37,7 @@ public class ZeroShifts {
     }
 
     private static String reverseString(String str) {
-        String[] words = str.split(" ");
+        String[] words = str.split("\\S+");
         StringBuilder sb = new StringBuilder();
         for (int i = words.length - 1; i >= 0; i--) {
             sb.append(words[i]);

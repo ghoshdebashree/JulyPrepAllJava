@@ -28,6 +28,7 @@ public class ReverseKNodesLinkedList {
             if (groupEnds == null) break;
             Nodes nextGroupStart = groupEnds.next;
             reverseData(groupStarts, groupEnds);
+
             prevGroupEnd.next = groupEnds;
             groupStarts.next = nextGroupStart;
             prevGroupEnd = groupStarts;
